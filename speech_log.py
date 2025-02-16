@@ -29,23 +29,23 @@ from google import genai
 def analyze_speech(recognized_text):
     client = genai.Client(api_key="AIzaSyCZJ9qqc7f2Vyzmht7Ja7Bp0m4LPs-_87c")
     response = client.models.generate_content(
-        model="gemini-2.0-flash", contents=("determine if this is a scam caller or if its a genuine person. if you believe it is a scammer, for example, if the text includes a lot of mentions of credit card info return a response in the form: CAREFUL of potential scam callers. Real banking services will never ask for your credit card information. note: only return a message if you believe the user is being scammed, if there is not enough information or you do not believe they are being scammed, return an empty string. Here is the text"+recognized_text)
+        model="gemini-2.0-flash", contents=("determine if this is a scam caller or if its a genuine person. if you believe it is a scammer, for example, if the text includes a lot of mentions of credit card info return a response in the form: CAREFUL of potential scam callers...[fact about why its most likely a scam] note: only return a message if you believe the user is being scammed, if there is not enough information or you do not believe they are being scammed, return an empty string. Here is the text"+recognized_text)
     )
     print(response.text)
     return response.text
 
-@st.dialog( "STOPIT", width = "large")
+@st.dialog( "WAIT A MINUTE", width = "large")
 def careful(warning_message):
     st.write("{}".format(warning_message))
 
 
-
+st.logo("./assets/favicon.png")
 
 col1, col2=st.columns([1,2], vertical_alignment = "center")
 with col1:
-    st.image("./assets/owl_logo.png", width=800)
+    st.image("./assets/owl_logo_wbg.png", width=800)
 with col2:
-    st.title("Hangup Helper!")
+    st.title("Hangup Helper speaking!")
     phone_number = st.text_input("Is this number safe?")
     if phone_number:
         scam_result = check_scam_number(phone_number)
@@ -67,8 +67,13 @@ if lol:
     while calling:
         if endclicked:
             calling = False
+            st.balloons()
         recognized_text = recognize_from_microphone()
         analysis=analyze_speech(recognized_text)
         st.write("{}".format(recognized_text))
         if (not analysis is "") and analysis.startswith("CAREFUL"):
             careful(analysis)
+
+st.subheader("Whoo whoo am I calling?")
+st.text("Many seniors are especially vulnerable to online scams. According to the FBI Internet Crime Complaint Center, roughly $3.4 billion in total fraud losses were reported by Americans over the age of 60 in 2023, while Nasdaq reported $77.7 billion of global fraud was linked to elderly victims in 2024.")
+st.info("Be careful! Remember, someone may seem like your friend, but you never know their intentions.") 
