@@ -34,7 +34,11 @@ def analyze_speech(recognized_text):
 
 @st.dialog( "WAIT A MINUTE", width = "large")
 def careful(warning_message):
-    st.write("{}".format(warning_message))
+    colo1, colo2 = st.columns(2, vertical_alignment = "center")
+    with colo1: 
+        st.image('./assets/owl_stop.png')
+    with colo2:
+        st.subheader("{}".format(warning_message))
 
 
 st.logo("./assets/favicon.png")
@@ -62,6 +66,7 @@ with cool2:
 
 if lol:
     calling = True
+    st.write("Call transcript:")
     while calling:
         if endclicked:
             calling = False
