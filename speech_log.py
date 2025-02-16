@@ -1,5 +1,6 @@
 import streamlit as st
 import azure.cognitiveservices.speech as speechsdk
+from google import genai
 from app import check_scam_number
 
 def recognize_from_microphone():
@@ -23,9 +24,6 @@ def recognize_from_microphone():
         return "" #"Speech Recognition canceled: {}".format(cancellation_details.reason)
 
 
-
-from google import genai
-
 def analyze_speech(recognized_text):
     client = genai.Client(api_key="AIzaSyCZJ9qqc7f2Vyzmht7Ja7Bp0m4LPs-_87c")
     response = client.models.generate_content(
@@ -37,8 +35,6 @@ def analyze_speech(recognized_text):
 @st.dialog( "STOPIT", width = "large")
 def careful(warning_message):
     st.write("{}".format(warning_message))
-
-
 
 
 col1, col2=st.columns([1,2], vertical_alignment = "center")
