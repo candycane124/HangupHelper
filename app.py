@@ -1,8 +1,8 @@
 import streamlit as st
 import azure.cognitiveservices.speech as speechsdk
-import time
+# import time
 import requests
-import os
+# import os
 #from dotenv import load_dotenv
 
 #load_dotenv()

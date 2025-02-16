@@ -1,5 +1,6 @@
 import streamlit as st
 import azure.cognitiveservices.speech as speechsdk
+from google import genai
 from app import check_scam_number
 
 def recognize_from_microphone():
@@ -22,9 +23,6 @@ def recognize_from_microphone():
             return "" # "Error details: {}".format(cancellation_details.error_details)
         return "" #"Speech Recognition canceled: {}".format(cancellation_details.reason)
 
-
-
-from google import genai
 
 def analyze_speech(recognized_text):
     client = genai.Client(api_key="AIzaSyCZJ9qqc7f2Vyzmht7Ja7Bp0m4LPs-_87c")
