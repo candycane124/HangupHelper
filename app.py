@@ -3,12 +3,12 @@ import azure.cognitiveservices.speech as speechsdk
 import time
 import requests
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 
-API_TOKEN = os.getenv("API_TOKEN")
-SPEECH_API_KEY = os.getenv("SPEECH_API_KEY")
+API_TOKEN = "my8zolap7qx9w2geib04cf6tdrs1n3"
+SPEECH_API_KEY = "AIzaSyCZJ9qqc7f2Vyzmht7Ja7Bp0m4LPs-_87c"
 SCAMSEARCH_URL = "https://scamsearch.io/api/search?search"
 
 def check_scam_number(phone_number):
@@ -28,7 +28,7 @@ def check_scam_number(phone_number):
         if data.get("status"):
             return "Scam call record found! Do NOT pick up."
         else:
-            return data.get("message")
+            return "This number looks safe..."
 
     except requests.exceptions.RequestException as e:
         return f"Error occured while checking number: {e}"
@@ -76,17 +76,17 @@ def check_scam_number(phone_number):
 #         if recognized_text:
 #             transcript_placeholder.write("You: " + recognized_text)
 
-st.title("Hangup Helpers")
-st.header("Proof of Concept")
+# st.title("Hangup Helpers")
+# st.header("Proof of Concept")
 
-phone_number = st.text_input("Incoming Call From: ")
-if phone_number:
-    scam_result = check_scam_number(phone_number)
-    st.write(scam_result)
+# phone_number = st.text_input("Incoming Call From: ")
+# if phone_number:
+#     scam_result = check_scam_number(phone_number)
+#     st.write(scam_result)
 
-# clicked = st.button("Simulate Call",on_click=simulate_call)
+# # clicked = st.button("Simulate Call",on_click=simulate_call)
 
-status_placeholder = st.empty()
-audio_placeholder = st.empty()
-transcript_placeholder = st.container()
-end_call_place = st.empty()
+# status_placeholder = st.empty()
+# audio_placeholder = st.empty()
+# transcript_placeholder = st.container()
+# end_call_place = st.empty()

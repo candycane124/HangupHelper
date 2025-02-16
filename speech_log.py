@@ -1,9 +1,6 @@
 import streamlit as st
-
-st.title("Log of speech recognition entries")
-
-
 import azure.cognitiveservices.speech as speechsdk
+from app import check_scam_number
 
 def recognize_from_microphone():
     # Directly use the subscription key and region
@@ -37,12 +34,36 @@ def analyze_speech(recognized_text):
     print(response.text)
     return response.text
 
+@st.dialog( "STOPIT", width = "large")
+def careful(warning_message):
+    st.write("{}".format(warning_message))
 
 
-st.title("Speech Recognition App")
-if st.button("Start Recognition"):
+
+
+col1, col2=st.columns([1,2], vertical_alignment = "center")
+with col1:
+    st.image("./assets/owl_logo.png", width=800)
+with col2:
+    st.title("Hangup Helper!")
+    phone_number = st.text_input("Is this number safe?")
+    if phone_number:
+        scam_result = check_scam_number(phone_number)
+        st.write(scam_result)
+    
+
+img1, cool1, img2, cool2 = st.columns([1,2,1,2], vertical_alignment="center")
+with img1: 
+    st.image('./assets/pickup.png', width = 100)
+with cool1:
+    lol = st.button("Start Call Analysis")
+with img2:
+    st.image('./assets/hangup.png', width = 100)
+with cool2: 
+    endclicked = st.button("End Call")
+
+if lol:
     calling = True
-    endclicked = st.button("end call")
     while calling:
         if endclicked:
             calling = False
@@ -50,5 +71,4 @@ if st.button("Start Recognition"):
         analysis=analyze_speech(recognized_text)
         st.write("{}".format(recognized_text))
         if (not analysis is "") and analysis.startswith("CAREFUL"):
-            st.write("{}".format(analysis))
-
+            careful(analysis)
